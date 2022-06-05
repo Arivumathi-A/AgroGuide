@@ -1,5 +1,44 @@
 <?php
     include("includes/config.php");
+
+    $err = '';
+    $total = '';
+    $user = '';
+    if (isset($_POST["buy"])) {
+        $cp = $_POST['crop'];
+        $qty = $_POST['qty'];
+        $user = $_SESSION['userLoggedIn'];
+
+        echo $user;
+
+        $query = mysqli_query($con, "select crop from product where crop = '$cp' and qty_avail >= $qty");
+
+        if (mysqli_num_rows($query) < 1) {
+            $err = "Please check the available quantity";
+        }
+        else {
+            $_SESSION['crop_ordered'] = $cp;
+            $_SESSION['crop_quantity'] = $qty;
+            $query2 = mysqli_query($con, "select * from product where crop = '$cp'");
+            $row1 = mysqli_fetch_assoc($query2);
+
+            $query4 = mysqli_query($con, "select * from consumer_login where username='$user'");
+            $row = mysqli_fetch_assoc($query4);
+            $cid = $row['id'];
+
+            $total = $qty * $row1["price"];
+
+            $q3 = mysqli_query($con, "INSERT INTO orders (o_id, crop, c_id, qty, amount) VALUES ('', '$cp', $cid, $qty, $total)");
+            $qty_total = $row1['qty_avail'];
+            $resQty = $qty_total - $qty;
+
+            
+            $_SESSION['qty_remaining'] = $resQty;
+            $_SESSION['price'] = $total;
+
+            header("Location: transaction.php");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +76,7 @@
                     $res4=mysqli_query($con,$sql4);
                     if($res4)
                     {
-                        echo "<table id='customer'>";
+                        echo "<table id='customers'>";
                         echo "<tr>";
                         echo "<th>Crop</th>";
                         echo "<th>price</th>";
@@ -52,24 +91,28 @@
                             echo "</tr>";
                         }
                         echo "</table>";
-                    }    
+                    }
         ?>
-        <form action="payment.php" method="post">
+        <form action="c_index.php" method="post">
             <?php
             $r="";
             $sql5="SELECT crop from product group by crop";
             $res5=mysqli_query($con,$sql5);
-            echo "<select id='sel'>";
+            echo "<select id='sel' name='crop'>";
             while($r = mysqli_fetch_assoc($res5))
             {
-                echo "<option value=>".$r["crop"]."</option>";
+                $ele = $r["crop"];
+                echo "<option value='$ele'>".$ele."</option>";
             }
             echo "</select>";
             ?>
             <br>
             <label for="qty">Quantity</label>
             <input type="text" name="qty"><br>
-            <input type="submit" name="buy" value="Buy">
+            <input type="submit" name="buy" value="Buy"><br>
+            <?php 
+                echo $err;
+            ?>
         </form>
     </body>
 </html>

@@ -29,14 +29,13 @@
 	if(isset($_POST['loginButton'])) {
 		$un = $_POST['loginUsername'];
 		$pw = $_POST['loginPassword'];
-		$_SESSION['userLoggedIn'] = $username;
 
 		$pw  = md5($pw);
 
 		$query = mysqli_query($con, "SELECT * FROM consumer_login WHERE username = '$un' AND password = '$pw'");
 
 		if(mysqli_num_rows($query) == 1){
-			$_SESSION['userLoggedIn'] = $username;
+			$_SESSION['userLoggedIn'] = $un;
 			header("Location: c_index.php");
 		}
 	}
