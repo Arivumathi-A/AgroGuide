@@ -56,7 +56,7 @@
 	<script type="text/javascript">
     	function FbotonOn() 
     	{ 
-        	document.getElementById('txt').innerHTML = "<?php echo $res5.crop; ?>";
+        	document.getElementById('txt').innerHTML = "<?php echo $res5; ?>";
 		}
 	</script>
 </body>
