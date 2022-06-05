@@ -42,8 +42,22 @@
 	    	echo "</tr>";
 	    }
 	    echo "</table>";
-	}    
+	}
+	$sql5="SELECT MIN(COUNT *), crop FROM farmer_details GROUP BY crop";
+	$res5=mysqli_query($con,$sql5);    
 	mysqli_close($con);	
 	?>
+	<input type="button" id='button' value = "Show" onclick="FbotonOn()">
+	<div>
+		<h2>Suggestion box</h2>
+		<h4>The crop suggested for you is</h4>
+		<p id="txt"></p>
+	</div>
+	<script type="text/javascript">
+    	function FbotonOn() 
+    	{ 
+        	document.getElementById('txt').innerHTML = "<?php echo $res5.crop; ?>";
+		}
+	</script>
 </body>
 </html>

@@ -61,13 +61,6 @@
 						<label for="loginPassword">Password</label>
 						<input id="loginPassword" name="loginPassword" type="password" value="<?php keepValues("loginPassword") ?>" placeholder="Your password" required>
 					</p>
-					<p>
-						<input type="radio" id="opt_farmer" name="opt_user" value="f" >
-						<label for="opt_farmer">Farmer</label>
-						<br>
-						<input type="radio" id="opt_consumer" name="opt_user" value="c" >
-						<label for="opt_consumer">Consumer</label>
-					</p>
 
 					<button type="submit" name="loginButton" >LOG IN</button>
 
