@@ -5,6 +5,7 @@
         $pn = $_POST["phNo"];
         $mof = $_POST["MOF"];
         $cp = $_POST["crop"];
+        $cp = ucfirst(strtolower($cp));
         $la = $_POST["landArea"];
         
         $status = mysqli_query($con, "INSERT INTO farmer_details values ('$un', '$pn', '$mof', '$cp', '$la')");
@@ -38,24 +39,6 @@
                     <input type="text" name="phNo" pattern="[1-9]{1}[0-9]{9}" placeholder="e.g. 1234567890" required><br>
 
                     <label for="MOF">Method of Farming</label>
-                        <!-- <select name="MOF" id="select-button" style="
-                        width:100%;
-                        padding:3px;
-                        
-                        background-color: transparent;
-                        border: 2px solid rgb(0, 0, 0);
-                        border-radius: 250px;
-                        color: rgb(0, 0, 0);
-                        margin: 20px auto;
-                        display: block;
-                        height: 35px;
-                        letter-spacing: normal;
-                        font-size: 20px;
-                        text-align:center;"
-                        >
-                            <option value="Organic">Organic</option>
-                            <option value="Inorganic">Inorganic</option>
-                        </select> -->
                     <input type="text" name="MOF" placeholder="e.g. " required><br>
 
                     <label for="crop">Crop</label>
@@ -68,6 +51,11 @@
                 </form>
             </div>
         </div>
+        <div id="loginquote">
+            <form action="harvest_completed.php" method="POST">
+                <button id="bt" name="bt">Harvest completed</button>
+            </form>
+		</div>
         <div id="result">
             <?php echo $msg; ?>
         </div>

@@ -13,6 +13,10 @@
 			position: relative;
 			top: 1.5em;
 		}
+		#d
+		{
+			display: none;
+		}
 	</style>
 </head>
 <body>
@@ -43,20 +47,31 @@
 	    }
 	    echo "</table>";
 	}
-	$sql5="SELECT MIN(COUNT *), crop FROM farmer_details GROUP BY crop";
-	$res5=mysqli_query($con,$sql5);    
-	mysqli_close($con);	
 	?>
 	<input type="button" id='button' value = "Show" onclick="FbotonOn()">
-	<div>
+	<div id="d">
 		<h2>Suggestion box</h2>
 		<h4>The crop suggested for you is</h4>
 		<p id="txt"></p>
 	</div>
+	<?php
+	 	$sql5="SELECT * from min_crop where land_area = ( SELECT min(land_area) from min_crop)";
+		$res5=mysqli_query($con,$sql5);
+		mysqli_close($con);
+	?>
 	<script type="text/javascript">
+		const divele = document.getElementById("d");
+    	const para = document.getElementById("txt");
     	function FbotonOn() 
     	{ 
-        	document.getElementById('txt').innerHTML = "<?php echo $res5; ?>";
+
+        	divele.style.display="block";
+        	para.innerHTML="<?php 
+								while($r = mysqli_fetch_assoc($res5))
+								{
+									echo $r["crop"];
+								}	 
+							?>";
 		}
 	</script>
 </body>

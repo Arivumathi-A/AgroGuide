@@ -126,3 +126,23 @@ input:focus {
     float:right;
     padding: 20px;
 }
+#bt{
+    background-color: transparent;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 250px;
+    color: rgb(0, 0, 0);
+    margin: 20px auto;
+    display: block;
+    height: 41px;
+    width: 100%;
+    letter-spacing: normal;
+    font-size: 20px;
+    padding: 20px;
+}
+
+#bt:hover{
+	cursor: pointer;
+    background-color: #39e600;
+    color: white;
+    border: none;
+}
