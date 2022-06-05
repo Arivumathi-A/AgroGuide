@@ -29,6 +29,7 @@
 	if(isset($_POST['loginButton'])) {
 		$un = $_POST['loginUsername'];
 		$pw = $_POST['loginPassword'];
+		$_SESSION['userLoggedIn'] = $username;
 
 		$pw  = md5($pw);
 

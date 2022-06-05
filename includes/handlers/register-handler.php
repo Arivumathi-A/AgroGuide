@@ -33,11 +33,8 @@ if(isset($_POST['registerButton'])) {
 
 	if($wasSuccessful == true) {
 		$_SESSION['userLoggedIn'] = $username;
-		if ($usertype != 'f'){
-			header("Location: index.php");
-		}
+		header("Location: f_index.php");
 	}
-
 }
 
 ?>

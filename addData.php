@@ -1,15 +1,17 @@
 <?php
-    $msg = '';
+    include("includes/config.php");
+    
     if (isset($_POST["addDataSubmit"])) {
-        $un = $_POST["uname"];
+        $un = $_SESSION['userLoggedIn'];
         $pn = $_POST["phNo"];
         $mof = $_POST["MOF"];
         $cp = $_POST["crop"];
         $cp = ucfirst(strtolower($cp));
         $la = $_POST["landArea"];
         
-        $status = mysqli_query($con, "INSERT INTO farmer_details values ('$un', '$pn', '$mof', '$cp', '$la')");
+        $status = mysqli_query($con, "INSERT INTO farmer_details values ('$un', '$pn', '$mof', '$cp', '$la', 0, 0)");
     }
+    $user = $_SESSION['userLoggedIn'];
 ?>
 
 <!DOCTYPE html>
@@ -32,8 +34,7 @@
             <div id="inputContainer">  
             <h2 id="msg">Enter user details</h2>  
                 <form id="loginform" action="" method="POST">
-                    <label for="uname">User Name</label>
-                    <input type="text" name="uname" placeholder="e.g. bartSimpson" required><br>
+                    <?php echo $_SESSION['userLoggedIn']; ?>
 
                     <label for="phNo">Phone Number</label>
                     <input type="text" name="phNo" pattern="[1-9]{1}[0-9]{9}" placeholder="e.g. 1234567890" required><br>
@@ -53,12 +54,8 @@
         </div>
         <div id="loginquote">
             <form action="harvest_completed.php" method="POST">
-                <button id="bt" name="bt">Harvest completed</button>
-            </form>
+                <button id="bt" name="harvest_complete">Harvest completed</button>
 		</div>
-        <div id="result">
-            <?php echo $msg; ?>
-        </div>
     </div>
 </body>
 </html>

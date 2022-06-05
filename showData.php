@@ -4,10 +4,10 @@
 	<title>Table</title>
 	<style>
 		.t
-		{
-			border-collapse: collapse;
+		{	border-collapse: collapse;
 			border: 1px solid #2980b9;
 		}
+		
 		#c,#cx
 		{
 			position: relative;

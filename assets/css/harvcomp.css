@@ -50,18 +50,16 @@ html, body{
 	width: 400px;
 	float: left;
 	border-right: 1px solid #00ff11;
-    padding-bottom: 100px;;
 }
 
 #inputContainer h2 {
+    color: blue;
 	text-align: center;
 	font-size: 30px;
 	font-weight: 100;
 }
 
-#inputContainer input[type="text"],
-#inputContainer input[type="email"],
-#inputContainer input[type="password"]{
+#inputContainer input[type="text"],{
     display: block;
     background-color: transparent;
     border: 0;
@@ -73,9 +71,6 @@ html, body{
 }
 #input:active {
 	border: none;
-}
-input:focus {
-	outline: none;
 }
 
 #inputContainer button{
@@ -93,9 +88,6 @@ input:focus {
 
 #inputContainer button:hover{
 	cursor: pointer;
-    background-color: #39e600;
-    color: white;
-    border: none;
 }
 
 #inputContainer label{
@@ -105,24 +97,28 @@ input:focus {
     color: rgb(75, 5, 188);
 }
 
+.accountAlreadyExist span{
+    font-size: 15px;
+    font-weight: bold;
+	cursor: pointer;
+}
+
+.accountAlreadyExist {
+	text-align: center;
+}
+
 #registerForm ,
 #loginForm {
 	display: none;
 	margin-top: 50px;
 }
-
-#msg
+#loginUsername
 {
-    text-transform: uppercase;
-    font-size: 30px;
-    font-weight: bold;
-    color: darkgreen;
-    text-align: center;
-    padding: 10px;
+	background-color: blue;
+	font-size: 30px;
+	font-family: sans-serif;
 }
-
-#result
+.errorMessage
 {
-    float:right;
-    padding: 20px;
+	color: red;
 }
