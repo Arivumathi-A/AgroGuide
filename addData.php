@@ -20,13 +20,6 @@
     <meta charset="utf-8">
     <title>Add your Data</title>
     <link rel="stylesheet" type="text/css" href="assets/css/adddata.css">
-    <style>
-        #successmsg
-        {
-            font-size: 30px;
-            color: blue;
-        }
-    </style>    
 </head>
 <body>
     <div id="background">

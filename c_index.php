@@ -6,10 +6,28 @@
     <head>
         <title>Shop now!</title>
         <style>
-		.t
-		{	border-collapse: collapse;
-			border: 1px solid #2980b9;
+            #customers {
+  			font-family: Arial, Helvetica, sans-serif;
+  			border-collapse: collapse;
+  			width: 100%;
+			}	
+
+		#customers td, #customers th {
+  			border: 1px solid #ddd;
+  			padding: 8px;
 		}
+
+		#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+		#customers tr:hover {background-color: #ddd;}
+
+		#customers th {
+  		padding-top: 12px;
+  		padding-bottom: 12px;
+  		text-align: left;
+  		background-color: #04AA6D;
+  		color: white;
+        }
 	</style>
     </head>
     <body>
@@ -19,7 +37,7 @@
                     $res4=mysqli_query($con,$sql4);
                     if($res4)
                     {
-                        echo "<table class='t'>";
+                        echo "<table id='customer'>";
                         echo "<tr>";
                         echo "<th>Crop</th>";
                         echo "<th>price</th>";
@@ -37,9 +55,21 @@
                     }    
         ?>
         <form action="payment.php" method="post">
-            <select id="crop">
-                
-            </select>
+            <?php
+            $r="";
+            $sql5="SELECT crop from product group by crop";
+            $res5=mysqli_query($con,$sql5);
+            echo "<select id='sel'>";
+            while($r = mysqli_fetch_assoc($res5))
+            {
+                echo "<option value=>".$r["crop"]."</option>";
+            }
+            echo "</select>";
+            ?>
+            <br>
+            <label for="qty">Quantity</label>
+            <input type="text" name="qty"><br>
+            <input type="submit" name="buy" value="Buy">
         </form>
     </body>
 </html>
