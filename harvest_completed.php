@@ -17,19 +17,19 @@
     }
 
     $res=mysqli_query($con,"SELECT crop as crop,sum(qty_avail) as qty from product group by crop");
-    $r = mysqli_fetch_assoc($res);
-    $q = mysqli_query($con, "select * from warehouse");
 
-    if (mysqli_num_rows($q) > 0) {
-        while($row = mysqli_fetch_assoc($res))
-        {
-            $Wcrop = $row["crop"];
-            $totalQty = $row["qty"];
-            mysqli_query($con, "insert into values('$Wcrop', $totalQty)");
-        }        
-    }
-    else {
-        mysqli_query($con, "update warehouse set quantity = $totalQty where crop = $Wcrop");
+    while($row = mysqli_fetch_assoc($res))
+    {
+        $Wcrop = $row["crop"];
+        $totalQty = $row["qty"];
+        $q = mysqli_query($con, "select * from warehouse where crop = '$Wcrop'");
+
+        if (mysqli_num_rows($q) > 0) {
+            mysqli_query($con, "update warehouse set quantity = $totalQty where crop = '$Wcrop'");
+        }
+        else {
+            mysqli_query($con, "insert into warehouse values('$Wcrop', $totalQty)");
+        }
     }
 ?>
 <!DOCTYPE html>

@@ -7,14 +7,8 @@ body {
 #div1
 {
     float: left;
-    border-right: 1px solid green;
     padding: 250px;
     padding-bottom: 500px;
-}
-#div2
-{
-    float: right;
-    padding: 200px;
 }
 #bt1
 {
@@ -22,9 +16,11 @@ body {
 	font-size: 20px;
 	border:none;
 	border-radius: 10px;
+  position: absolute;
+  left: 200px;
 }
 #bt1:hover {
-  background-color:#63f563 ;
+  background-color:#085708 ;
   color: white;
   transition-duration: 0.4s;
   cursor: pointer;
@@ -35,13 +31,13 @@ body {
 	font-size: 20px;
 	border:none;
 	border-radius: 10px;
-    position: absolute;
-    left: 700px;
-    top: 255px;
+  position: absolute;
+  left: 700px;
+  top: 255px;
 
 }
 #bt2:hover {
-  background-color:#63f563 ;
+  background-color:#085708 ;
   color: white;
   transition-duration: 0.4s;
   cursor: pointer;
@@ -49,7 +45,7 @@ body {
 #quote {
     position: absolute;
     top:5px;
-    right: 400px;
+    right: 500px;
     padding: 45px;
     display: table;
     color: black;
