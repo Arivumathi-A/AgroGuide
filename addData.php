@@ -9,7 +9,7 @@
         $cp = ucfirst(strtolower($cp));
         $la = $_POST["landArea"];
         
-        $status = mysqli_query($con, "INSERT INTO farmer_details values ('$un', '$pn', '$mof', '$cp', '$la', 0, 0)");
+        $status = mysqli_query($con, "INSERT INTO farmer_details values ('$un', '$pn', '$mof', '$cp', '$la')");
     }
     $user = $_SESSION['userLoggedIn'];
 ?>

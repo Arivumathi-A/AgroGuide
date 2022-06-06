@@ -2,18 +2,34 @@
     include("includes/config.php");
     $user = $_SESSION['userLoggedIn'];
 
-    $q = '';
+    $cropQuery = mysqli_query($con, "select * from product where username = '$user';");
+    $row = mysqli_fetch_assoc($cropQuery);
+    $cp = $row['crop'];
     if (isset($_POST['pnqReport'])){
         $price = (int)$_POST['price'];
         $quantity = (int)$_POST['qnty'];
-        $cp = $_POST['crop'];
 
         $query = mysqli_query($con, "select * from product where username = '$user' and crop = '$cp';");
 
         if (mysqli_num_rows($query) == 1) {
-            $q = 'success';
-            $query2 = mysqli_query($con, "update product set price = $price, qty_avail = $quantity where username = '$user' and crop = '$cp';");
+            $query2 = mysqli_query($con, "update product set price = $price, qty_avail = $quantity where username = '$user';");
         }
+    }
+
+    $res=mysqli_query($con,"SELECT crop as crop,sum(qty_avail) as qty from product group by crop");
+    $r = mysqli_fetch_assoc($res);
+    $q = mysqli_query($con, "select * from warehouse");
+
+    if (mysqli_num_rows($q) > 0) {
+        while($row = mysqli_fetch_assoc($res))
+        {
+            $Wcrop = $row["crop"];
+            $totalQty = $row["qty"];
+            mysqli_query($con, "insert into values('$Wcrop', $totalQty)");
+        }        
+    }
+    else {
+        mysqli_query($con, "update warehouse set quantity = $totalQty where crop = $Wcrop");
     }
 ?>
 <!DOCTYPE html>
@@ -28,8 +44,7 @@
             <div id="inputContainer">
                 <form action="harvest_completed.php" method="POST">
                     <h2 style="color:blue;">Harvest details</h2>
-                    <label for="crop">Crop</label>
-                    <input type="text" name="crop"><br>
+                    <p><?php echo $cp; ?></p>
                     <label for="price">price</label>
                     <input type="text" name="price"><br>
                     <label for="qnty">Quantity being provided</label>
@@ -39,6 +54,5 @@
             </div>
         </div>
     </div>            
-        <?php echo $q; ?>
     </body>
 </html>

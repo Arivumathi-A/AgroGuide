@@ -1,7 +1,8 @@
 <?php
     include("includes/config.php");
-
+    
     $err = '';
+    $qtyErr = '';
     $total = '';
     $user = '';
     if (isset($_POST["buy"])) {
@@ -27,16 +28,20 @@
             $cid = $row['id'];
 
             $total = $qty * $row1["price"];
+            $qtyErr = '';
 
             $q3 = mysqli_query($con, "INSERT INTO orders (o_id, crop, c_id, qty, amount) VALUES ('', '$cp', $cid, $qty, $total)");
             $qty_total = $row1['qty_avail'];
             $resQty = $qty_total - $qty;
-
-            
             $_SESSION['qty_remaining'] = $resQty;
             $_SESSION['price'] = $total;
 
-            header("Location: transaction.php");
+            if ($resQty > 0) {
+                header("Location: transaction.php");
+            }
+            else {
+                $qtyErr = 'Entered quantity is more than available quantity';
+            }
         }
     }
 ?>
@@ -51,47 +56,49 @@
   			width: 100%;
 			}	
 
-		#customers td, #customers th {
-  			border: 1px solid #ddd;
-  			padding: 8px;
-		}
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
 
-		#customers tr:nth-child(even){background-color: #f2f2f2;}
+            #customers tr:nth-child(even){
+                background-color: #f2f2f2;
+            }
 
-		#customers tr:hover {background-color: #ddd;}
+            #customers tr:hover {
+                background-color: #ddd;
+            }
 
-		#customers th {
-  		padding-top: 12px;
-  		padding-bottom: 12px;
-  		text-align: left;
-  		background-color: #04AA6D;
-  		color: white;
-        }
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #04AA6D;
+                color: white;
+            }
 	</style>
     </head>
     <body>
         <?php
-                    $row="";
-                    $sql4="SELECT crop,avg(price) as price,sum(qty_avail) as qty from product group by crop";
-                    $res4=mysqli_query($con,$sql4);
-                    if($res4)
+                $row="";
+                $sql4="SELECT * from warehouse";
+                $res4=mysqli_query($con,$sql4);
+                if($res4)
+                {
+                    echo "<table id='customers'>";
+                    echo "<tr>";
+                    echo "<th>Crop</th>";
+                    echo "<th>Quantity</th>";
+                    echo "</tr>";
+                    while($row = mysqli_fetch_assoc($res4))
                     {
-                        echo "<table id='customers'>";
                         echo "<tr>";
-                        echo "<th>Crop</th>";
-                        echo "<th>price</th>";
-                        echo "<th>Quantity</th>";
+                        echo "<td class='t'>".$row["crop"]."</td>";
+                        echo "<td class='t'>".$row["quantity"]."</td>";
                         echo "</tr>";
-                        while($row = mysqli_fetch_assoc($res4))
-                        {
-                            echo "<tr>";
-                            echo "<td class='t'>".$row["crop"]."</td>";
-                            echo "<td class='t'>".$row["price"]."</td>";
-                            echo "<td class='t'>".$row["qty"]."</td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
                     }
+                    echo "</table>";
+                }
         ?>
         <form action="c_index.php" method="post">
             <?php
@@ -112,6 +119,7 @@
             <input type="submit" name="buy" value="Buy"><br>
             <?php 
                 echo $err;
+                echo $qtyErr;
             ?>
         </form>
     </body>
